@@ -14,8 +14,8 @@ from enum import IntEnum
 import glob
 import shutil
 
-NOTINPUT_FOLDER_PATH = 'data/notInput/'
-INPUTED_FOLDER_PATH = 'data/inputed/'
+NOTINPUT_FOLDER_PATH = '../data/notInput/'
+INPUTED_FOLDER_PATH = '../data/inputed/'
 TOP_NODE_PRIMARY_KEY = '7fc22d27-9439-4f05-bbd7-444be019c788'
 
 class Winner(IntEnum):
