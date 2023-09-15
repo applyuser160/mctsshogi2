@@ -1,7 +1,7 @@
 #ifndef PIECE_TYPE_HPP
 #define PIECE_TYPE_HPP
 
-enum PieceType
+enum class PieceType
 {
     Promote = 8, PieceTypeNumber = 15,
     None = 0, King, Gold, 

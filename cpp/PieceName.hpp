@@ -1,7 +1,7 @@
 #ifndef PIECE_NAME_HPP
 #define PIECE_NAME_HPP
 
-enum PieceName
+enum class PieceName
 {
     Empty = 0, UnPromoted = 0, Promoted = 8,
     BPawn = 1, BLance, BKnight, BSilver, BBishop, BRook, BGold, BKing,

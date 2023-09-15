@@ -10,6 +10,6 @@ public:
     BitBoard hasPiece;
     BitBoard playerPossession[2];
     const BitBoard isFrame = BitBoard(STRING_OF_FRAME);
-    BitBoard hasSpecificPiece[PieceTypeNumber];
+    BitBoard hasSpecificPiece[(uint64_t)PieceType::PieceTypeNumber];
 };
 #endif

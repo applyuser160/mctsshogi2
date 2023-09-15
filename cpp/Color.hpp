@@ -1,7 +1,7 @@
 #ifndef COLOR_HPP
 #define COLOR_HPP
 
-enum Color
+enum class Color
 {
     Black, White
 };
