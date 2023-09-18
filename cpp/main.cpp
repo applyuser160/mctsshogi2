@@ -7,6 +7,12 @@
 
 int main() {
     Board board = Board();
+    int* arrayTrueIndex;
+    int trueCount = board.hasPiece.getTrues(&arrayTrueIndex);
+    for (int i = 0; i < trueCount; i++){
+        printf("%d,", arrayTrueIndex[i]);
+    }
+    printf("\n");
     std::cout << "frame   : " << board.isFrame.board << std::endl;
     std::cout << "hasPiece: " << board.hasPiece.board << std::endl;
     std::cout << "Black   : " << board.playerPossession[(uint64_t)ColorType::Black].board << std::endl;
@@ -14,7 +20,7 @@ int main() {
     std::cout << "None    : " << board.hasSpecificPiece[(uint64_t)PieceType::None].board << std::endl;
     std::cout << "King    : " << board.hasSpecificPiece[(uint64_t)PieceType::King].board << std::endl;
     std::cout << "Gold    : " << board.hasSpecificPiece[(uint64_t)PieceType::Gold].board << std::endl;
-    std::cout << "Rook    : " << board.hasSpecificPiece[(uint64_t)PieceType::Gold].board << std::endl;
+    std::cout << "Rook    : " << board.hasSpecificPiece[(uint64_t)PieceType::Rook].board << std::endl;
     std::cout << "Bichop  : " << board.hasSpecificPiece[(uint64_t)PieceType::Bichop].board << std::endl;
     std::cout << "Silver  : " << board.hasSpecificPiece[(uint64_t)PieceType::Silver].board << std::endl;
     std::cout << "Knight  : " << board.hasSpecificPiece[(uint64_t)PieceType::Knight].board << std::endl;

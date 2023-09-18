@@ -70,18 +70,7 @@
                               "00000000000" \
                               "00001010000" \
                               "00000000000"
-#define STRING_OF_START_ROOK  "00000000000" \
-                              "00000000000" \
-                              "00100000000" \
-                              "00000000000" \
-                              "00000000000" \
-                              "00000000000" \
-                              "00000000000" \
-                              "00000000000" \
-                              "00000000100" \
-                              "00000000000" \
-                              "00000000000"
-#define STRING_OF_START_BICHOP "00000000000" \
+#define STRING_OF_START_ROOK "00000000000" \
                                "00000000000" \
                                "00000000100" \
                                "00000000000" \
@@ -92,6 +81,17 @@
                                "00100000000" \
                                "00000000000" \
                                "00000000000"
+#define STRING_OF_START_BICHOP  "00000000000" \
+                              "00000000000" \
+                              "00100000000" \
+                              "00000000000" \
+                              "00000000000" \
+                              "00000000000" \
+                              "00000000000" \
+                              "00000000000" \
+                              "00000000100" \
+                              "00000000000" \
+                              "00000000000"
 #define STRING_OF_START_SILVER "00000000000" \
                                "00010001000" \
                                "00000000000" \
@@ -202,6 +202,39 @@
                                 "00000000000" \
                                 "00000000000" \
                                 "00000000000"
+#define STRING_OF_PRO_ZONE "00000000000" \
+                           "01111111110" \
+                           "01111111110" \
+                           "01111111110" \
+                           "00000000000" \
+                           "00000000000" \
+                           "00000000000" \
+                           "01111111110" \
+                           "01111111110" \
+                           "01111111110" \
+                           "00000000000"
+#define STRING_OF_LAST1_ZONE "00000000000" \
+                             "01111111110" \
+                             "00000000000" \
+                             "00000000000" \
+                             "00000000000" \
+                             "00000000000" \
+                             "00000000000" \
+                             "00000000000" \
+                             "00000000000" \
+                             "01111111110" \
+                             "00000000000"
+#define STRING_OF_LAST2_ZONE "00000000000" \
+                             "01111111110" \
+                             "01111111110" \
+                             "00000000000" \
+                             "00000000000" \
+                             "00000000000" \
+                             "00000000000" \
+                             "00000000000" \
+                             "01111111110" \
+                             "01111111110" \
+                             "00000000000"
 
 class Board
 {
@@ -209,7 +242,10 @@ private:
 public:
     BitBoard hasPiece;
     BitBoard playerPossession[(uint64_t)ColorType::ColorNumber];
-    const BitBoard isFrame = BitBoard(STRING_OF_FRAME);
+    BitBoard isFrame = BitBoard(STRING_OF_FRAME);
+    BitBoard ablePro = BitBoard(STRING_OF_PRO_ZONE);
+    BitBoard lastOne = BitBoard(STRING_OF_LAST1_ZONE);
+    BitBoard lastTwo = BitBoard(STRING_OF_LAST2_ZONE);
     BitBoard hasSpecificPiece[(uint64_t)PieceType::PieceTypeNumber];
     Board(){
         hasPiece = BitBoard(STRING_OF_START_PIECE);
