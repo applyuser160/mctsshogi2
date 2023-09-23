@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <bitset>
 #include <stdlib.h>
+#include "Common.hpp"
 
 /*
 BitBoard
@@ -39,6 +40,72 @@ the board is located in rows 1 to 9 and columns 1 to 9
                         "10000000001" \
                         "10000000001" \
                         "11111111111"
+#define STRING_OF_PRO_ZONE_BLACK "00000000000" \
+                                 "00000000000" \
+                                 "00000000000" \
+                                 "00000000000" \
+                                 "00000000000" \
+                                 "00000000000" \
+                                 "00000000000" \
+                                 "01111111110" \
+                                 "01111111110" \
+                                 "01111111110" \
+                                 "00000000000"
+#define STRING_OF_PRO_ZONE_WHITE "00000000000" \
+                                 "01111111110" \
+                                 "01111111110" \
+                                 "01111111110" \
+                                 "00000000000" \
+                                 "00000000000" \
+                                 "00000000000" \
+                                 "00000000000" \
+                                 "00000000000" \
+                                 "00000000000" \
+                                 "00000000000"
+#define STRING_OF_LAST1_ZONE_BLACK "00000000000" \
+                                   "00000000000" \
+                                   "00000000000" \
+                                   "00000000000" \
+                                   "00000000000" \
+                                   "00000000000" \
+                                   "00000000000" \
+                                   "00000000000" \
+                                   "00000000000" \
+                                   "01111111110" \
+                                   "00000000000"
+#define STRING_OF_LAST1_ZONE_WHITE "00000000000" \
+                                   "01111111110" \
+                                   "00000000000" \
+                                   "00000000000" \
+                                   "00000000000" \
+                                   "00000000000" \
+                                   "00000000000" \
+                                   "00000000000" \
+                                   "00000000000" \
+                                   "00000000000" \
+                                   "00000000000"
+#define STRING_OF_LAST2_ZONE_BLACK "00000000000" \
+                                   "00000000000" \
+                                   "00000000000" \
+                                   "00000000000" \
+                                   "00000000000" \
+                                   "00000000000" \
+                                   "00000000000" \
+                                   "00000000000" \
+                                   "01111111110" \
+                                   "01111111110" \
+                                   "00000000000"
+#define STRING_OF_LAST2_ZONE_WHITE "00000000000" \
+                                   "01111111110" \
+                                   "01111111110" \
+                                   "00000000000" \
+                                   "00000000000" \
+                                   "00000000000" \
+                                   "00000000000" \
+                                   "00000000000" \
+                                   "00000000000" \
+                                   "00000000000" \
+                                   "00000000000"
 
 class BitBoard
 {
@@ -51,6 +118,9 @@ public:
     BitBoard(const BitBoard& bitBoard){
         board = bitBoard.board;
     }
+    BitBoard(const std::bitset<LENGTH_OF_BOARD> bitset){
+        board = bitset;
+    }
     BitBoard(const uint64_t value){
         board = std::bitset<LENGTH_OF_BOARD>(value);
     }
@@ -58,14 +128,14 @@ public:
         board = std::bitset<LENGTH_OF_BOARD>(value);
     }
     void to_ullongs(uint64_t* result){
-        std::bitset<LENGTH_OF_BOARD> bn1 = board >> 64;
-        std::bitset<LENGTH_OF_BOARD> bn2 = (bn1 << 64) ^ board;
+        std::bitset<LENGTH_OF_BOARD> bn1 = board >> BIT_NUMBER_ULL;
+        std::bitset<LENGTH_OF_BOARD> bn2 = (bn1 << BIT_NUMBER_ULL) ^ board;
         result[0] = bn1.to_ullong();
         result[1] = bn2.to_ullong();
     }
     int getTrues(int** result){
         int trueCount = board.count();
-        *result = (int*)calloc(trueCount, sizeof(int));
+        *result = new int[trueCount];
         int index = 0;
         for (int i = 0; i < board.size(); i++){
             if (board.test(i)){
@@ -74,6 +144,47 @@ public:
             }
         }
         return trueCount;
+    }
+
+    BitBoard operator &(BitBoard bitBoard){
+        return (*this).board & bitBoard.board;
+    }
+    BitBoard operator &(std::bitset<LENGTH_OF_BOARD> board){
+        return (*this).board & board;
+    }
+
+    BitBoard operator |(BitBoard bitBoard){
+        return (*this).board | bitBoard.board;
+    }
+    BitBoard operator |(std::bitset<LENGTH_OF_BOARD> board){
+        return (*this).board | board;
+    }
+
+    BitBoard operator <<(int num){
+        return (*this).board << num;
+    }
+    BitBoard operator >>(int num){
+        return (*this).board >> num;
+    }
+
+    static BitBoard generateColumns(int* columnNo, int columnCount){
+        BitBoard bitBoard = BitBoard();
+        for (int i = 0; i < 9; i++){
+            for (int j = 0; j < columnCount; j++){
+                bitBoard.board.set(columnNo[j]);
+            }
+            bitBoard.board <<= 11;
+        }
+        return bitBoard;
+    }
+
+    static BitBoard generateColumn(int columnNo){
+        BitBoard bitBoard = BitBoard();
+        for (int i = 0; i < 9; i++){
+            bitBoard.board.set(columnNo);
+            bitBoard.board <<= 11;
+        }
+        return bitBoard;
     }
 };
 #endif

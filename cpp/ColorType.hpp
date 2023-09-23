@@ -3,7 +3,7 @@
 
 enum class ColorType
 {
-    Black, White, ColorNumber = 2
+    None = -1, Black, White, ColorNumber = 2
 };
 
 #endif
