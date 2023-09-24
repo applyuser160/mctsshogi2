@@ -46,6 +46,10 @@ public:
         int index = calcIndex(colorType, pieceType);
         counts[index]++;
     }
+    void addPieces(ColorType colorType, PieceType pieceType, int count){
+        int index = calcIndex(colorType, pieceType);
+        counts[index] += count;
+    }
     void decreasePiece(ColorType colorType, PieceType pieceType){
         int index = calcIndex(colorType, pieceType);
         counts[index]--;

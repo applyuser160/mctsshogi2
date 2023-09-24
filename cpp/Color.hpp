@@ -21,11 +21,22 @@ public:
         switch (colorType){
             using enum ColorType;
         case Black:
-            return (char*)"B";
+            return (char*)"b";
         case White:
-            return (char*)"W";
+            return (char*)"w";
         default:
-            return (char*)"D";
+            return (char*)"d";
+        }
+    }
+    static ColorType convertFromString(char str){
+        switch (str){
+            using enum ColorType;
+        case 'b':
+            return Black;
+        case 'w':
+            return White;
+        default:
+            return None;
         }
     }
 };

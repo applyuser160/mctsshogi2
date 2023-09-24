@@ -18,6 +18,10 @@ public:
         column = index % 11;
         row = index / 11;
     }
+    Address(char* str){
+        column = str[0] - 48;
+        row = str[1] - 96;
+    }
     int toIndex(){
         return row * 11 + column;
     }

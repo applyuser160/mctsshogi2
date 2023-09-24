@@ -29,23 +29,6 @@ private:
             hasSpecificPiece[i].board.reset(index);
         }
     }
-    void deploy(int index, PieceType pieceType, ColorType color){
-        hasPiece.board.set(index);
-        for (int i = 0; i < (int)ColorType::ColorNumber; i++){
-            if (color == (ColorType)i){
-                playerPossession[i].board.set(index);
-            }else{
-                playerPossession[i].board.reset(index);
-            }
-        }
-        for (int i = 0; i < (int)PieceType::PieceTypeNumber; i++){
-            if (pieceType == (PieceType)i){
-                hasSpecificPiece[i].board.set(index);
-            }else{
-                hasSpecificPiece[i].board.reset(index);
-            }
-        }
-    }
     void moveStandard(int fromIndex, int toIndex){
         PieceType pieceType = getPieceTypeFromIndex(fromIndex);
         ColorType colorType = getColorTypeFromIndex(fromIndex);
@@ -101,6 +84,10 @@ public:
         for (int i = 1; i < (int)PieceTypeNumber; i++){
             hasSpecificPiece[i] = BitBoard();
         }
+        hand = Hand();
+    }
+    void startpos(){
+        using enum PieceType;
         deploy(Address::addressToIndex(Address(1,1)), Lance, ColorType::White);
         deploy(Address::addressToIndex(Address(2,1)), Knight, ColorType::White);
         deploy(Address::addressToIndex(Address(3,1)), Silver, ColorType::White);
@@ -145,26 +132,23 @@ public:
 
         hand = Hand();
     }
-    Board(int code){
-        hasPiece = BitBoard();
-        using enum PieceType;
-        for (int i = 0; i < (int)ColorType::ColorNumber; i++){
-            playerPossession[i] = BitBoard();
-        }
-        hasSpecificPiece[(int)None] = BitBoard(isFrame);
-        hasSpecificPiece[(int)None].board.flip();
-        for (int i = 1; i < (int)PieceTypeNumber; i++){
-            hasSpecificPiece[i] = BitBoard();
-        }
-        deploy(Address::addressToIndex(Address(8,1)), ProPawn, ColorType::Black);
-        deploy(Address::addressToIndex(Address(7,3)), Bichop, ColorType::Black);
-        deploy(Address::addressToIndex(Address(9,4)), Knight, ColorType::Black);
-        deploy(Address::addressToIndex(Address(7,5)), Lance, ColorType::White);
-        deploy(Address::addressToIndex(Address(8,7)), Pawn, ColorType::Black);
 
-        hand = Hand();
-        hand.addPiece(ColorType::Black, PieceType::Pawn);
-        hand.addPiece(ColorType::Black, PieceType::Silver);
+    void deploy(int index, PieceType pieceType, ColorType color){
+        hasPiece.board.set(index);
+        for (int i = 0; i < (int)ColorType::ColorNumber; i++){
+            if (color == (ColorType)i){
+                playerPossession[i].board.set(index);
+            }else{
+                playerPossession[i].board.reset(index);
+            }
+        }
+        for (int i = 0; i < (int)PieceType::PieceTypeNumber; i++){
+            if (pieceType == (PieceType)i){
+                hasSpecificPiece[i].board.set(index);
+            }else{
+                hasSpecificPiece[i].board.reset(index);
+            }
+        }
     }
 
     PieceType getPieceTypeFromIndex(int index){

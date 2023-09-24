@@ -11,41 +11,75 @@
 class Piece
 {
 private:
-    static char* convertString(PieceType pieceType){
-        using enum PieceType;
+    static char* convertString(PieceType pieceType, ColorType owner){
+        char* result = new char[3];
+        char* piece;
+        bool isPromote;
+        if ((int)pieceType > (int)PieceType::Promote){
+            result[0] = '+';
+            piece = &result[1];
+            result[2] = '\0';
+            pieceType = (PieceType)((int)pieceType - (int)PieceType::PromoteChange);
+        }else{
+            piece = &result[0];
+            result[1] = '\0';
+        }
+
         switch (pieceType){
+            using enum PieceType;
         case None:
-            return (char*)" ";
+            *piece = ' ';
+            break;
         case King:
-            return (char*)"k";
+            *piece = 'k';
+            break;
         case Gold:  
-            return (char*)"g";
+            *piece = 'g';
+            break;
         case Rook:
-            return (char*)"r";
+            *piece = 'r';
+            break;
         case Bichop:
-            return (char*)"b";
+            *piece = 'b';
+            break;
         case Silver:
-            return (char*)"s";
+            *piece = 's';
+            break;
         case Knight:
-            return (char*)"n";
+            *piece = 'n';
+            break;
         case Lance:
-            return (char*)"l";
+            *piece = 'l';
+            break;
         case Pawn:
-            return (char*)"p";
-        case Dragon:
-            return (char*)"d";
-        case Horse:
-            return (char*)"h";
-        case ProSilver:
-            return (char*)"+s";
-        case ProKnight:
-            return (char*)"+n";
-        case ProLance:
-            return (char*)"+l";
-        case ProPawn:
-            return (char*)"+p";
+            *piece = 'p';
+            break;
         default:
-            return (char*)"";
+            *piece = ' ';
+        }
+        if (owner == ColorType::Black){
+            *piece -= 32;
+        }
+        return result;
+    }
+    void convertFromString(char str){
+        if (str > 83){
+            owner = ColorType::White;
+            str -= 32;
+        }else{
+            owner = ColorType::Black;
+        }
+        switch (str){
+            using enum PieceType;
+        case 'K': type = King; break;
+        case 'G': type = Gold; break;
+        case 'R': type = Rook; break;
+        case 'B': type = Bichop; break;
+        case 'S': type = Silver; break;
+        case 'N': type = Knight; break;
+        case 'L': type = Lance; break;
+        case 'P': type = Pawn; break;
+        default: type = None; break;
         }
     }
 public:
@@ -65,6 +99,22 @@ public:
         bit >>= 1;
         type = (PieceType)bit.to_ulong();
     }
+    Piece(char str){
+        convertFromString(str);
+    }
+    Piece(char* str){
+        int promote = 0;
+        char pieceStr;
+        if (str[0] == '+'){
+            promote = (int)PieceType::PromoteChange;
+            pieceStr = str[1];
+        }else{
+            pieceStr = str[0];
+        }
+        convertFromString(pieceStr);
+        type = (PieceType)((int)type + promote);
+    }
+
     int toInt(){
         int result = (int)type;
         result <<= 1;
@@ -72,7 +122,7 @@ public:
         return result;
     }
     char* toString(){
-        return convertString(type);
+        return convertString(type, owner);
     }
     static void getMoveType(MoveType moveTypes[(int)DirectionName::DirectionNameNumber], PieceType pieceType){
         using enum PieceType;
@@ -275,8 +325,8 @@ public:
             return false;
         }
     }
-    static char* toString(PieceType pieceType){
-        return convertString(pieceType);
+    static char* toString(PieceType pieceType, ColorType owner){
+        return convertString(pieceType, owner);
     }
 };
 #endif

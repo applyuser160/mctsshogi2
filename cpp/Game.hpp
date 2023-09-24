@@ -21,12 +21,74 @@ public:
         turn = ColorType::Black;
         winner = ColorType::None;
     }
-    Game(Board board, int moveNumber, ColorType turn, ColorType winner){
+    Game(Board board, int moveNumber, ColorType turn, ColorType winner = ColorType::None){
         (*this).board = board;
         (*this).moveNumber = moveNumber;
         (*this).turn = turn;
         (*this).winner = winner;
     }
+
+    void inputBoard(char* sfen){
+        if (sfen == "startpos"){
+            board.startpos();
+        }
+        char* currentSfen = &sfen[0];
+        int consecutive = 0;
+        for (int row = 1; row <= 9; row++){
+            for (int column = 9; column >= 1; column--){
+                if (*currentSfen > '0' && *currentSfen  <= '9'){
+                    consecutive = *currentSfen  - 48;
+                    currentSfen += 1;
+                }
+                if (consecutive > 0){
+                    consecutive--;
+                    continue;
+                }
+                if (*currentSfen == '/'){
+                    currentSfen += 1;
+                    column++;
+                    continue;
+                }
+                int index = Address(column, row).toIndex();
+                Piece piece = Piece(currentSfen);
+                board.deploy(index, piece.type, piece.owner);
+                if ((int)piece.type > (int)PieceType::Promote){
+                    currentSfen += 2;
+                }else{
+                    currentSfen += 1;
+                }
+            }
+        }
+    }
+
+    void inputHand(char* sfen){
+        if (sfen == "-") return;
+        char* currentSfen = &sfen[0];
+        while(1){
+            if (*currentSfen == '\0'){
+                break;
+            }
+            if (*currentSfen > '0' && *currentSfen  <= '9'){
+                int consecutive = *currentSfen  - 48;
+                Piece piece = Piece(currentSfen[1]);
+                board.hand.addPieces(piece.owner, piece.type, consecutive);
+                currentSfen += 2;
+            }else{
+                Piece piece = Piece(currentSfen);
+                board.hand.addPiece(piece.owner, piece.type);
+                currentSfen += 1;
+            }
+        }
+    }
+
+    void inputMoveNumber(char* sfen){
+        moveNumber = atoi(sfen);
+    }
+
+    void inputTurn(char* sfen){
+        turn = Color::convertFromString(sfen[0]);
+    }
+
 
     bool isFinished(ColorType* winner){
         using enum ColorType;

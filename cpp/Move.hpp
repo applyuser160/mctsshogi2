@@ -10,6 +10,32 @@
 
 class Move{
 private:
+    bool isDrop(char* csa){
+        return csa[1] == '*';
+    }
+    bool isPromote(char* csa){
+        return csa[4] == '+';
+    }
+    void standartConstructor(Address from, Address to, bool promote){
+        std::bitset<16> bitFrom(from.toIndex());
+        std::bitset<16> bitTo(to.toIndex());
+        std::bitset<16> bitPro(promote);
+        std::bitset<16> bitDrop(0);
+        bitDrop <<= 15;
+        bitPro <<= 14;
+        bitTo <<= 7;
+        value = bitFrom | bitTo | bitPro | bitDrop;
+    }
+    void dropConstructor(Piece piece, Address to){
+        std::bitset<16> bitFrom(piece.toInt());
+        std::bitset<16> bitTo(to.toIndex());
+        std::bitset<16> bitPro(0);
+        std::bitset<16> bitDrop(1);
+        bitDrop <<= 15;
+        bitPro <<= 14;
+        bitTo <<= 7;
+        value = bitFrom | bitTo | bitPro | bitDrop;
+    }
 public:
     std::bitset<16> value;
     /*
@@ -23,24 +49,20 @@ public:
         value = std::bitset<16>(0);
     }
     Move(Address from, Address to, bool promote){
-        std::bitset<16> bitFrom(from.toIndex());
-        std::bitset<16> bitTo(to.toIndex());
-        std::bitset<16> bitPro(promote);
-        std::bitset<16> bitDrop(0);
-        bitDrop <<= 15;
-        bitPro <<= 14;
-        bitTo <<= 7;
-        value = bitFrom | bitTo | bitPro | bitDrop;
+        standartConstructor(from, to, promote);
     }
     Move(Piece piece, Address to){
-        std::bitset<16> bitFrom(piece.toInt());
-        std::bitset<16> bitTo(to.toIndex());
-        std::bitset<16> bitPro(0);
-        std::bitset<16> bitDrop(0);
-        bitDrop <<= 15;
-        bitPro <<= 14;
-        bitTo <<= 7;
-        value = bitFrom | bitTo | bitPro | bitDrop;
+        dropConstructor(piece, to);
+    }
+    Move(char* csa){
+        Address to = Address(&csa[2]);
+        if (isDrop(csa)){
+            Piece piece = Piece(csa[0]);
+            dropConstructor(piece, to);
+        }else{
+            Address from = Address(csa);
+            standartConstructor(from, to, isPromote(csa));
+        }
     }
 
     bool getIsDrop(){
