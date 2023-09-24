@@ -1,1 +1,1 @@
-# deepshogi
+# mctsshogi
