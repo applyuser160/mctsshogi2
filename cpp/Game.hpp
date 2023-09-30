@@ -3,10 +3,11 @@
 
 #include <time.h>
 #include <vector>
-
+#include <mutex>
 #include <random>
 #include "Board.hpp"
 #include "Random.hpp"
+#include "MctsResult.hpp"
 
 class Game{
 private:
@@ -30,7 +31,8 @@ public:
 
     void inputBoard(char* sfen){
         if (sfen == "startpos"){
-            board.startpos();
+            (*this).board.startpos();
+            return;
         }
         char* currentSfen = &sfen[0];
         int consecutive = 0;
@@ -114,8 +116,8 @@ public:
             int moveCount = board.serchMoves(&moves, turn);
             Random random = Random(0, moveCount - 1);
             Move move = moves[random.generateOne()];
-            delete[] moves;
             executeMove(move);
+            delete[] moves;
             bool isFinish = isFinished(&winner);
             if (isFinish){
                 break;
@@ -136,6 +138,7 @@ public:
             Random random = Random(0, moveCount - 1);
             Move move = moves[random.generateOne()];
             executeMove(move);
+            delete[] moves;
             bool isFinish = isFinished(&winner);
             times.push_back(((sec1.tv_sec - start.tv_sec) * 1000000) + (sec1.tv_usec - start.tv_usec));
             if (isFinish){
@@ -143,6 +146,35 @@ public:
             }
         }
         return times;
+    }
+
+    void randomMove(MctsResult* result, bool* isStop){
+        Game copiedGame = (*this);
+        while(1){
+            (*this) = copiedGame;
+            Random nextRandom = Random(0, (*result).nextMoveCount - 1);
+            int randomOne = nextRandom.generateOne();
+            Move nextMove = (*result).nextMoves[randomOne];
+            executeMove(nextMove);
+
+            while(1){
+                Move* moves;
+                int moveCount = board.serchMoves(&moves, turn);
+                Random random = Random(0, moveCount - 1);
+                Move move = moves[random.generateOne()];
+                executeMove(move);
+                delete[] moves;
+                bool isFinish = isFinished(&winner);
+                if (isFinish){
+                    (*result).plusResult(winner, randomOne);
+                    break;
+                }
+            }
+
+            if (*isStop){
+                break;
+            }
+        }
     }
 };
 

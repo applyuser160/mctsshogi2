@@ -86,52 +86,6 @@ public:
         }
         hand = Hand();
     }
-    void startpos(){
-        using enum PieceType;
-        deploy(Address::addressToIndex(Address(1,1)), Lance, ColorType::White);
-        deploy(Address::addressToIndex(Address(2,1)), Knight, ColorType::White);
-        deploy(Address::addressToIndex(Address(3,1)), Silver, ColorType::White);
-        deploy(Address::addressToIndex(Address(4,1)), Gold, ColorType::White);
-        deploy(Address::addressToIndex(Address(5,1)), King, ColorType::White);
-        deploy(Address::addressToIndex(Address(6,1)), Gold, ColorType::White);
-        deploy(Address::addressToIndex(Address(7,1)), Silver, ColorType::White);
-        deploy(Address::addressToIndex(Address(8,1)), Knight, ColorType::White);
-        deploy(Address::addressToIndex(Address(9,1)), Lance, ColorType::White);
-        deploy(Address::addressToIndex(Address(2,2)), Bichop, ColorType::White);
-        deploy(Address::addressToIndex(Address(8,2)), Rook, ColorType::White);
-        deploy(Address::addressToIndex(Address(1,3)), Pawn, ColorType::White);
-        deploy(Address::addressToIndex(Address(2,3)), Pawn, ColorType::White);
-        deploy(Address::addressToIndex(Address(3,3)), Pawn, ColorType::White);
-        deploy(Address::addressToIndex(Address(4,3)), Pawn, ColorType::White);
-        deploy(Address::addressToIndex(Address(5,3)), Pawn, ColorType::White);
-        deploy(Address::addressToIndex(Address(6,3)), Pawn, ColorType::White);
-        deploy(Address::addressToIndex(Address(7,3)), Pawn, ColorType::White);
-        deploy(Address::addressToIndex(Address(8,3)), Pawn, ColorType::White);
-        deploy(Address::addressToIndex(Address(9,3)), Pawn, ColorType::White);
-
-        deploy(Address::addressToIndex(Address(1,9)), Lance, ColorType::Black);
-        deploy(Address::addressToIndex(Address(2,9)), Knight, ColorType::Black);
-        deploy(Address::addressToIndex(Address(3,9)), Silver, ColorType::Black);
-        deploy(Address::addressToIndex(Address(4,9)), Gold, ColorType::Black);
-        deploy(Address::addressToIndex(Address(5,9)), King, ColorType::Black);
-        deploy(Address::addressToIndex(Address(6,9)), Gold, ColorType::Black);
-        deploy(Address::addressToIndex(Address(7,9)), Silver, ColorType::Black);
-        deploy(Address::addressToIndex(Address(8,9)), Knight, ColorType::Black);
-        deploy(Address::addressToIndex(Address(9,9)), Lance, ColorType::Black);
-        deploy(Address::addressToIndex(Address(2,8)), Bichop, ColorType::Black);
-        deploy(Address::addressToIndex(Address(8,8)), Rook, ColorType::Black);
-        deploy(Address::addressToIndex(Address(1,7)), Pawn, ColorType::Black);
-        deploy(Address::addressToIndex(Address(2,7)), Pawn, ColorType::Black);
-        deploy(Address::addressToIndex(Address(3,7)), Pawn, ColorType::Black);
-        deploy(Address::addressToIndex(Address(4,7)), Pawn, ColorType::Black);
-        deploy(Address::addressToIndex(Address(5,7)), Pawn, ColorType::Black);
-        deploy(Address::addressToIndex(Address(6,7)), Pawn, ColorType::Black);
-        deploy(Address::addressToIndex(Address(7,7)), Pawn, ColorType::Black);
-        deploy(Address::addressToIndex(Address(8,7)), Pawn, ColorType::Black);
-        deploy(Address::addressToIndex(Address(9,7)), Pawn, ColorType::Black);
-
-        hand = Hand();
-    }
 
     void deploy(int index, PieceType pieceType, ColorType color){
         hasPiece.board.set(index);
@@ -149,6 +103,53 @@ public:
                 hasSpecificPiece[i].board.reset(index);
             }
         }
+    }
+
+    void startpos(){
+        using enum PieceType;
+        deploy(Address(1,1).toIndex(), Lance, ColorType::White);
+        deploy(Address(2,1).toIndex(), Knight, ColorType::White);
+        deploy(Address(3,1).toIndex(), Silver, ColorType::White);
+        deploy(Address(4,1).toIndex(), Gold, ColorType::White);
+        deploy(Address(5,1).toIndex(), King, ColorType::White);
+        deploy(Address(6,1).toIndex(), Gold, ColorType::White);
+        deploy(Address(7,1).toIndex(), Silver, ColorType::White);
+        deploy(Address(8,1).toIndex(), Knight, ColorType::White);
+        deploy(Address(9,1).toIndex(), Lance, ColorType::White);
+        deploy(Address(2,2).toIndex(), Bichop, ColorType::White);
+        deploy(Address(8,2).toIndex(), Rook, ColorType::White);
+        deploy(Address(1,3).toIndex(), Pawn, ColorType::White);
+        deploy(Address(2,3).toIndex(), Pawn, ColorType::White);
+        deploy(Address(3,3).toIndex(), Pawn, ColorType::White);
+        deploy(Address(4,3).toIndex(), Pawn, ColorType::White);
+        deploy(Address(5,3).toIndex(), Pawn, ColorType::White);
+        deploy(Address(6,3).toIndex(), Pawn, ColorType::White);
+        deploy(Address(7,3).toIndex(), Pawn, ColorType::White);
+        deploy(Address(8,3).toIndex(), Pawn, ColorType::White);
+        deploy(Address(9,3).toIndex(), Pawn, ColorType::White);
+
+        deploy(Address(1,9).toIndex(), Lance, ColorType::Black);
+        deploy(Address(2,9).toIndex(), Knight, ColorType::Black);
+        deploy(Address(3,9).toIndex(), Silver, ColorType::Black);
+        deploy(Address(4,9).toIndex(), Gold, ColorType::Black);
+        deploy(Address(5,9).toIndex(), King, ColorType::Black);
+        deploy(Address(6,9).toIndex(), Gold, ColorType::Black);
+        deploy(Address(7,9).toIndex(), Silver, ColorType::Black);
+        deploy(Address(8,9).toIndex(), Knight, ColorType::Black);
+        deploy(Address(9,9).toIndex(), Lance, ColorType::Black);
+        deploy(Address(8,8).toIndex(), Bichop, ColorType::Black);
+        deploy(Address(2,8).toIndex(), Rook, ColorType::Black);
+        deploy(Address(1,7).toIndex(), Pawn, ColorType::Black);
+        deploy(Address(2,7).toIndex(), Pawn, ColorType::Black);
+        deploy(Address(3,7).toIndex(), Pawn, ColorType::Black);
+        deploy(Address(4,7).toIndex(), Pawn, ColorType::Black);
+        deploy(Address(5,7).toIndex(), Pawn, ColorType::Black);
+        deploy(Address(6,7).toIndex(), Pawn, ColorType::Black);
+        deploy(Address(7,7).toIndex(), Pawn, ColorType::Black);
+        deploy(Address(8,7).toIndex(), Pawn, ColorType::Black);
+        deploy(Address(9,7).toIndex(), Pawn, ColorType::Black);
+
+        hand = Hand();
     }
 
     PieceType getPieceTypeFromIndex(int index){
@@ -288,7 +289,7 @@ public:
             for (int i = 0; i < pawnIndexCount; i++){
                 doublepawn = doublepawn | BitBoard::generateColumn(Address::indexToAddress(pawnIndexs[i]).column);
             }
-            delete(pawnIndexs);
+            delete[] pawnIndexs;
 
             notdoublepawn = BitBoard(doublepawn);
             notdoublepawn.board.flip();
@@ -358,6 +359,7 @@ public:
             }
             delete[] moveIndexs;
         }
+        delete[] playerHandPieces;
 
         mingw_gettimeofday(&sec3, NULL);
 

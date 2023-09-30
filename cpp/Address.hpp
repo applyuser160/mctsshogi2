@@ -27,7 +27,7 @@ public:
     }
     char* toString(){
         char* result = new char[2];
-        sprintf(result, "%d%d", column, row);
+        sprintf(result, "%d%c", column, row + 96);
         return result;
     }
 
