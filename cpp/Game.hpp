@@ -128,28 +128,6 @@ public:
         return (*this);
     }
 
-    std::vector<int> timeMeasurements(){
-        std::vector<int> times;
-
-        while(true){
-            struct timeval start, sec1;
-            mingw_gettimeofday(&start, NULL);
-            Move* moves;
-            int moveCount = board.serchMoves(&moves, turn);
-            mingw_gettimeofday(&sec1, NULL);
-            Random random = Random(0, moveCount - 1);
-            Move move = moves[random.generateOne()];
-            executeMove(move);
-            delete[] moves;
-            bool isFinish = isFinished(&winner);
-            times.push_back(((sec1.tv_sec - start.tv_sec) * 1000000) + (sec1.tv_usec - start.tv_usec));
-            if (isFinish){
-                break;
-            }
-        }
-        return times;
-    }
-
     void randomMove(MctsResult* result, bool* isStop){
         Game copiedGame = (*this);
         while(1){

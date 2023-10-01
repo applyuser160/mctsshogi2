@@ -304,16 +304,11 @@ public:
 
 
     int serchMoves(Move** moves, ColorType color){
-        struct timeval start, sec1, sec2, sec3, sec4;
-        mingw_gettimeofday(&start, NULL);
-
         std::vector<Move> vectorMove;
 
         BitBoard playerBoard = (bool)color ? playerPossession[(int)ColorType::White] : playerPossession[(int)ColorType::Black];
         int* playerBoardIndexs;
         int playerBoardIndexsCount = playerBoard.getTrues(&playerBoardIndexs);
-
-        mingw_gettimeofday(&sec1, NULL);
 
         for (int i = 0; i < playerBoardIndexsCount; i++){
             int* moveIndexs;
@@ -342,8 +337,6 @@ public:
             delete[] moveIndexs;
         }
 
-        mingw_gettimeofday(&sec2, NULL);
-
         /*指し手*/
         Piece* playerHandPieces;
         int playerHandPiecesCount = hand.getPlayerPieces(&playerHandPieces, color);
@@ -361,13 +354,9 @@ public:
         }
         delete[] playerHandPieces;
 
-        mingw_gettimeofday(&sec3, NULL);
-
         int size = vectorMove.size();
         (*moves) = new Move[size];
         std::copy(vectorMove.begin(), vectorMove.end(), (*moves));
-
-        mingw_gettimeofday(&sec4, NULL);
 
         delete[] playerBoardIndexs;
 
