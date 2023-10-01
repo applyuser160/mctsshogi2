@@ -55,17 +55,18 @@ public:
     void commandPosition(std::vector<std::string> options){
         char *board, *turn, *hand, *moveNum;
         int moveIndex = 0;
-        board = (char*)options[1].c_str();
         if (options[1] == "startpos"){
+            board = (char*)options[1].c_str();
             turn = (char*)"b";
             hand = (char*)"-";
             moveNum = (char*)"1";
             moveIndex = 2;
         }else{
-            turn = (char*)options[2].c_str();
-            hand = (char*)options[3].c_str();
-            moveNum = (char*)options[4].c_str();
-            moveIndex = 5;
+            board = (char*)options[2].c_str();
+            turn = (char*)options[3].c_str();
+            hand = (char*)options[4].c_str();
+            moveNum = (char*)options[5].c_str();
+            moveIndex = 6;
         }
         
         game.inputBoard(board);
@@ -73,23 +74,18 @@ public:
         game.inputHand(hand);
         game.inputMoveNumber(moveNum);
 
-        if (options[moveIndex] == "moves"){
-            moveIndex++;
-            for (int i = moveIndex; i < options.size(); i++){
-                char *moveStr = new char[options[i].size() + 1];
-                std::char_traits<char>::copy(moveStr, options[i].c_str(), options[i].size() + 1);
-                game.executeMove(Move(moveStr));
+        if (moveIndex >= options.size()){
+            if (options[moveIndex] == "moves"){
+                moveIndex++;
+                for (int i = moveIndex; i < options.size(); i++){
+                    char *moveStr = new char[options[i].size() + 1];
+                    std::char_traits<char>::copy(moveStr, options[i].c_str(), options[i].size() + 1);
+                    game.executeMove(Move(moveStr));
+                }
             }
         }
 
         status = UsiStatusType::Ready;
-        if (options[1] != "startpos"){
-            delete[] turn;
-            delete[] hand;
-            delete[] moveNum;
-        }
-
-        std::cout << "set position\n";
     }
 
     void commandGo(std::vector<std::string> options){
