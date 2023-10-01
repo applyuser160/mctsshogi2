@@ -30,7 +30,9 @@ public:
     }
 
     void inputBoard(char* sfen){
-        if (sfen == "startpos"){
+        char* startpos = (char*)"startpos\0";
+        bool isEqual = std::equal(sfen, sfen + 8, startpos, startpos + 8);
+        if (isEqual){
             (*this).board.startpos();
             return;
         }

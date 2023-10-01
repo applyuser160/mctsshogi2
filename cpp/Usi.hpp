@@ -12,7 +12,7 @@
 #include "Game.hpp"
 #include "MctsResult.hpp"
 
-const int numThread = 10;
+const int numThread = 12;
 
 class Usi{
 private:
@@ -55,20 +55,16 @@ public:
     void commandPosition(std::vector<std::string> options){
         char *board, *turn, *hand, *moveNum;
         int moveIndex = 0;
-        board = new char[options[1].size() + 1];
-        std::char_traits<char>::copy(board, options[1].c_str(), options[1].size() + 1);
+        board = (char*)options[1].c_str();
         if (options[1] == "startpos"){
             turn = (char*)"b";
             hand = (char*)"-";
             moveNum = (char*)"1";
             moveIndex = 2;
         }else{
-            turn = new char[options[2].size() + 1];
-            std::char_traits<char>::copy(turn, options[2].c_str(), options[2].size() + 1);
-            hand = new char[options[3].size() + 1];
-            std::char_traits<char>::copy(hand, options[3].c_str(), options[3].size() + 1);
-            moveNum = new char[options[4].size() + 1];
-            std::char_traits<char>::copy(moveNum, options[4].c_str(), options[4].size() + 1);
+            turn = (char*)options[2].c_str();
+            hand = (char*)options[3].c_str();
+            moveNum = (char*)options[4].c_str();
             moveIndex = 5;
         }
         
@@ -87,12 +83,12 @@ public:
         }
 
         status = UsiStatusType::Ready;
-        delete[] board;
         if (options[1] != "startpos"){
             delete[] turn;
             delete[] hand;
             delete[] moveNum;
         }
+
         std::cout << "set position\n";
     }
 

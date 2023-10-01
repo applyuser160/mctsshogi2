@@ -76,7 +76,7 @@ int main() {
 /*非同期処理*/
     Usi usi = Usi();
     usi.game = Game();
-    usi.game.inputBoard((char*)"startpos");
+    usi.game.inputBoard((char*)"startpos\0");
     // std::cout << "haspiece:" << game.board.hasPiece.board << "\n";
     // std::cout << "black   :" << game.board.playerPossession[0].board << "\n";
     // std::cout << "white   :" << game.board.playerPossession[1].board << "\n";
@@ -95,6 +95,20 @@ int main() {
     std::cout << "sleeped\n";
     usi.commandStop();
 /*非同期処理*/
+
+    // int nextMoveCount = 30;
+    // int** result = new int*[nextMoveCount];
+    // for (int i = 0; i < nextMoveCount; i++){
+    //     result[i] = new int[(int)ColorType::ColorNumber + 1];
+    // }
+
+    // result[0][0]++;
+
+    // for (int i = 0; i < nextMoveCount; i++){
+    //     for (int j = 0; j < 3; j++){
+    //         printf("[%d,%d]:%p,%d\n", i, j, &result[i][j], result[i][j]);
+    //     }
+    // }
 
     return 0;
 }

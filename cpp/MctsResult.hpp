@@ -33,6 +33,11 @@ public:
         for (int i = 0; i < nextMoveCount; i++){
             result[i] = new int[(int)ColorType::ColorNumber + 1];
         }
+        for (int i = 0; i < nextMoveCount; i++){
+            for (int j = 0; j < (int)ColorType::ColorNumber + 1; j++){
+                result[i][j] = 0;
+            }
+        }
     }
 
     void deleteResult(){
