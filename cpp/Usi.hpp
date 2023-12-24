@@ -113,7 +113,6 @@ public:
             threads.pop_back();
         }
         result.calcResult(game.turn);
-        delete[] result.nextMoves;
         status = UsiStatusType::Ready;
     }
 

@@ -1,0 +1,8 @@
+version: '3'
+services:
+  cpp:
+    image: gcc:latest
+    volumes:
+    - ./cpp:/home
+    working_dir: /home
+    command: ["tail", "-F", "/dev/null"]

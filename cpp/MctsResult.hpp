@@ -70,7 +70,7 @@ public:
                 bestIndex = i;
             }
         }
-        // std::cout << count << " times played!\n";
+        std::cout << count << " times played!\n";
         std::cout << "bestmove " << nextMoves[bestIndex].toString() << "\n";
 
         deleteResult();
